@@ -39,7 +39,7 @@
       </div>
     </t-form-item>
 
-    <div class="check-container remember-pwd">
+    <div class="check-container remember-pwd" >
       <t-checkbox>{{ '记住密码' }}</t-checkbox>
       <span class="tip">{{ '忘记密码？' }}</span>
     </div>

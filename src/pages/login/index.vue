@@ -4,11 +4,11 @@
 
     <div class="login-container">
       <div class="title-container">
-        <h1 class="title margin-no">{{ '欢迎使用' }}</h1>
-        <h1 class="title">上海地铁乘客智能交互与信息分类系统</h1>
+        <h1 class="title margin-no" style="color:rgba(255, 255, 255, 0.906)">{{ '欢迎使用' }}</h1>
+        <h1 class="title" style="color:rgba(255, 255, 255, 0.906)">上海地铁乘客智能交互与信息分类系统</h1>
         <div class="sub-title">
-          <p class="tip">{{ type == 'register' ? '已有账户？' : '没有账户？' }}</p>
-          <p class="tip" @click="switchType(type == 'register' ? 'login' : 'register')">
+          <p class="tip" style="color:rgba(255, 255, 255, 0.906)">{{ type == 'register' ? '已有账户？' : '没有账户？' }}</p>
+          <p class="tip" style="color:rgba(255, 255, 255, 0.906)" @click="switchType(type == 'register' ? 'login' : 'register')">
             {{ type == 'register' ? '去登陆' : '去注册' }}
           </p>
         </div>
