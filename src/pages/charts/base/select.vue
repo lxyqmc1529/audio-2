@@ -3,7 +3,7 @@
     <div class="select_type">
       <t-space direction="vertical">
         <t-select v-model="value1" :options="options1" placeholder="请选择" multiple @focus="onFocus" @blur="onBlur" @change="searchByType" />
-        <t-select v-model="value2" placeholder="请选择分类2" multiple>
+        <t-select v-model="value2" placeholder="请选择分类2" multiple @change="changeTypeTiny">
           <t-option label="全选" :check-all="true" />
           <t-option v-for="item in options2" :key="item.value" :value="item.value" :label="item.label"></t-option>
         </t-select>
@@ -28,7 +28,7 @@
 <script setup lang="jsx">
 import { ref, defineEmits } from 'vue';
 
-const emit = defineEmits(['searchById'],['resetData'],['changeDate'],['changeType']);
+const emit = defineEmits(['searchById'],['resetData'],['changeDate'],['changeType'],['changeTypeTiny']);
 const options1 = [
   { label: '全选', checkAll: true },
   { label: '投诉', value: '1' },
@@ -72,6 +72,15 @@ const onBlur = (ctx) => {
 const onPick = (value, context) => console.log('onPick:', value, context);
 const handleInput = (value) => {
   emit('searchById', value);
+};
+const changeTypeTiny = (values) => {
+  const labels = values.map(value => {
+    // 找到匹配的 value，返回对应的 label
+    const option = options2.find(option => option.value === value);
+    return option ? option.label : null; // 如果没有找到，返回 null 或其他占位值
+  });
+  console.log(labels);
+    emit('changeTypeTiny', labels);
 };
 const handleReset = () => {
   emit('resetData');

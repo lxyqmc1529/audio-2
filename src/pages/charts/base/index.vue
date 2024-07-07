@@ -1,26 +1,28 @@
 <template>
-  <Select @searchById="handleSearchById" @resetData="handleReset" @changeDate="handleChangeDate" @searchByType="handleSearchByType" />
+  <Select @searchById="handleSearchById" @resetData="handleReset" @changeDate="handleChangeDate" @changeType="handleSearchByType" @changeTypeTiny="handleSearchByType" />
   <div class="content">
-  <div class="chart_table">
-    <t-space direction="vertical">
-      <t-table
-        v-model:selected-row-keys="selectedRowKeys"
-        row-key="index"
-        :data="data"
-        :columns="columns"
-        :pagination="pagination"
-        :reserve-selected-row-on-paginate="true"
-        lazy-load
-        @page-change="onPageChange"
-        @change="onChange"
-        @select-change="onSelectChange"
-      />
+    <t-space>
+      <div class="chart_table">
+        <t-space direction="vertical">
+        <t-table
+          v-model:selected-row-keys="selectedRowKeys"
+          row-key="index"
+          :data="data"
+          :columns="columns"
+          :pagination="pagination"
+          :reserve-selected-row-on-paginate="true"
+          lazy-load
+          @page-change="onPageChange"
+          @change="onChange"
+          @select-change="onSelectChange"
+        />
+      </t-space>
+      </div>
+      <div class="pie">
+        <pie-chart />
+      </div>
     </t-space>
   </div>
-  <div class="pie">
-    <pie-chart />
-  </div>
-</div>
 </template>
 
 <script setup lang="jsx">
@@ -56,11 +58,16 @@ const handleSearchById = (id) => {
 const handleChangeDate = (date,context) => {
   data.value = baseData.value.filter((item) => item.createTime >= date[0] && item.createTime <= date[1]);
 }
+const handleSearchByTypeTiny = (type) => {
+  console.log(type);
+  data.value = baseData.value.filter((item) => type.includes(item.classify_2));
+}
 const handleReset = () => {
   console.log('reset');
   data.value = baseData.value;
 }
 const handleSearchByType = (type) => {
+  console.log(type);
   data.value = baseData.value.filter((item) => type.includes(item.classify_1));
 }
 const reserveSelectedRowOnPaginate = ref(true);
@@ -108,17 +115,17 @@ const onSelectChange = (selectedRowKeys, context) => {
   display: flex;
 }
 .chart_table {
-  width: 55%;
+  width: 100%;
   height: 100%;
   float: left;
   flex:1;
   padding-right: 10px;
 }
 .pie {
+  width: 100%;
   flex:0.7 ;
-  height: 650px;
-  float: right;
-  /* margin-left: 10px; */
+  width: 400px;
   background-color: white;
+  padding: 12px;
 }
 </style>
