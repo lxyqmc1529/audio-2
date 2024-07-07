@@ -1,5 +1,5 @@
 <template>
-  <Select @searchById="handleSearchById" @resetData="handleReset" @changeDate="handleChangeDate"/>
+  <Select @searchById="handleSearchById" @resetData="handleReset" @changeDate="handleChangeDate" @searchByType="handleSearchByType" />
   <div class="content">
   <div class="chart_table">
     <t-space direction="vertical">
@@ -54,12 +54,14 @@ const handleSearchById = (id) => {
   data.value = baseData.value.filter((item) => item.index == id);
 }
 const handleChangeDate = (date,context) => {
-  console.log('-----',date);
   data.value = baseData.value.filter((item) => item.createTime >= date[0] && item.createTime <= date[1]);
 }
 const handleReset = () => {
   console.log('reset');
   data.value = baseData.value;
+}
+const handleSearchByType = (type) => {
+  data.value = baseData.value.filter((item) => type.includes(item.classify_1));
 }
 const reserveSelectedRowOnPaginate = ref(true);
 const selectedRowKeys = ref([]);

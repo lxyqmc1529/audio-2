@@ -2,10 +2,7 @@
   <div class="select">
     <div class="select_type">
       <t-space direction="vertical">
-        <!-- 方式一：使用 options 输出下拉选项。优先级高于 t-option-->
-        <t-select v-model="value1" :options="options1" placeholder="请选择" multiple @focus="onFocus" @blur="onBlur" />
-
-        <!-- 方式二：使用 t-option 输出下拉选项。options 和 t-option 两种实现方式二选一即可 -->
+        <t-select v-model="value1" :options="options1" placeholder="请选择" multiple @focus="onFocus" @blur="onBlur" @change="searchByType" />
         <t-select v-model="value2" placeholder="请选择分类2" multiple>
           <t-option label="全选" :check-all="true" />
           <t-option v-for="item in options2" :key="item.value" :value="item.value" :label="item.label"></t-option>
@@ -31,7 +28,7 @@
 <script setup lang="jsx">
 import { ref, defineEmits } from 'vue';
 
-const emit = defineEmits(['searchById'],['resetData'],['changeDate']);
+const emit = defineEmits(['searchById'],['resetData'],['changeDate'],['changeType']);
 const options1 = [
   { label: '全选', checkAll: true },
   { label: '投诉', value: '1' },
@@ -56,6 +53,16 @@ const value2 = ref(['1', '2', '3', '4']);
 
 const onFocus = (ctx) => {
   console.log('focus:', ctx);
+};
+const searchByType = (values) => {
+  // 使用 map() 对每个 value 进行查找，返回对应的 label 数组
+  const labels = values.map(value => {
+    // 找到匹配的 value，返回对应的 label
+    const option = options1.find(option => option.value === value);
+    return option ? option.label : null; // 如果没有找到，返回 null 或其他占位值
+  });
+  // emit 一个包含所有 label 的数组
+  emit('changeType', labels);
 };
 
 const onBlur = (ctx) => {
@@ -100,5 +107,5 @@ const onChange = (value, context) => {
 
 .searchById {
   flex: 1;
-  margin: 20px 0 30px 0;
+  margin: 15px 0 30px 0;
 }</style>
