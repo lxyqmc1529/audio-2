@@ -21,10 +21,9 @@ function init() {
   // 指定图表的配置项和数据
 const xAxisData = Array.from({ length: 24 }, (_, i) => i + 1).map(item => `${item}:00`);
 const yAxisData = Array.from({ length: 24 }, (_, i) => ({
+    name: `数据${i + 1}`,
     value: Math.floor(Math.random() * 100 * i),
-    name: `数据${i + 1}`
   }));
-const yAxisData2 = Array.from({ length: 24 }, (_, i) => Math.floor(Math.random() * 11*i));
   const option = {
     tooltip: {
       trigger: 'axis',
@@ -45,7 +44,8 @@ const yAxisData2 = Array.from({ length: 24 }, (_, i) => Math.floor(Math.random()
     {
       data: yAxisData,
       type: 'line',
-      smooth: true
+      smooth: true,
+      name: '空调温度',
     },
   ]
 };

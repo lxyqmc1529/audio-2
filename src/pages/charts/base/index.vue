@@ -1,5 +1,5 @@
 <template>
-  <Select />
+  <Select @searchById="handleSearchById" @resetData="handleReset" />
   <div class="content">
   <div class="chart_table">
     <t-space direction="vertical">
@@ -29,10 +29,10 @@ import { reactive, ref } from 'vue';
 import PieChart from '../pieCharts.vue';
 import Select from './select.vue';
 
-const data = [];
+const data = ref([]);
 const TOTAL = 59;
 for (let i = 0; i < TOTAL; i++) {
-  data.push({
+  data.value.push({
     index: i + 1,
     applicant: ['1', '2', '3'][i % 3],
     status: i % 3,
@@ -48,7 +48,15 @@ for (let i = 0; i < TOTAL; i++) {
     classify_3: ['陆家浜路', '松江大学城', '中山北路', '一大会址黄陂南路'][i % 4],
   });
 }
-
+const baseData = ref([]);
+baseData.value = data.value;
+const handleSearchById = (id) => {
+  data.value = data.value.filter((item) => item.index == id);
+}
+const handleReset = () => {
+  console.log('reset');
+  data.value = baseData.value;
+}
 const reserveSelectedRowOnPaginate = ref(true);
 const selectedRowKeys = ref([]);
 
@@ -63,12 +71,6 @@ const columns = [
   { colKey: 'createTime', title: '处理时间' },
 ];
 
-/**
- * 1. 本地分页方式一（非受控用法）：使用 defaultCurrent 和 defaultPageSize 设置默认分页信息，仅第一次有效。
- *
- * 2. 本地分页方式二（受控用法）：使用 current 和 pageSize 设置分页信息，任何时候有效，
- *    此时，注意需要在 onPageChange 中对 pagination.current 和 pagination.pageSize 进行赋值
- * */
 const pagination = reactive({
   current: 1,
   pageSize: 10,

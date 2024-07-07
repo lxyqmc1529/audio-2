@@ -13,21 +13,25 @@
       </t-space>
     </div>
     <div class="select_right">
-    <div class="select_date">
-      <t-space direction="vertical">
-        <t-date-range-picker allow-input clearable @pick="onPick" @change="onChange" />
-      </t-space>
+      <div class="select_date">
+        <t-space direction="vertical">
+          <t-date-range-picker allow-input clearable @pick="onPick" @change="onChange" />
+        </t-space>
+      </div>
+      <div class="searchById">
+        <t-input @change="handleInput" placeholder="请输入查询ID" />
+        <div style="margin-top: 10px">
+          <t-button type="primary" @click="handleReset">重置查询条件</t-button>
+        </div>
+      </div>
     </div>
-    <div class="searchById">
-       <t-input @change="handleInput" placeholder="请输入查询ID"/>
-    </div>
-   </div>
 
   </div>
 </template>
 <script setup lang="jsx">
-import { ref } from 'vue';
+import { ref, defineEmits } from 'vue';
 
+const emit = defineEmits(['searchById'],['resetData']);
 const options1 = [
   { label: '全选', checkAll: true },
   { label: '投诉', value: '1' },
@@ -59,7 +63,12 @@ const onBlur = (ctx) => {
 };
 
 const onPick = (value, context) => console.log('onPick:', value, context);
-const handleInput = (value) => console.log('handleInput:', value);
+const handleInput = (value) => {
+  emit('searchById', value);
+};
+const handleReset = () => {
+  emit('resetData');
+}
 const onChange = (value, context) => {
   console.log('onChange:', value, context);
   console.log(
@@ -80,21 +89,24 @@ const onChange = (value, context) => {
   display: flex;
   flex-direction: row;
 }
-.select_type{
+
+.select_type {
   flex: 0.6;
   width: 20%;
 }
-.select_right{
+
+.select_right {
   display: flex;
   flex-direction: column;
   height: 100%;
   cursor: pointer;
 }
-.select_date{
-    flex: 1;
-  }
-  .searchById{
-    flex: 1;
-    margin:20px 0 30px 0;
-  }
-</style>
+
+.select_date {
+  flex: 1;
+}
+
+.searchById {
+  flex: 1;
+  margin: 20px 0 30px 0;
+}</style>
