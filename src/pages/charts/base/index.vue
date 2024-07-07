@@ -1,5 +1,6 @@
 <template>
   <Select />
+  <div class="content">
   <div class="chart_table">
     <t-space direction="vertical">
       <t-table
@@ -19,6 +20,7 @@
   <div class="pie">
     <pie-chart />
   </div>
+</div>
 </template>
 
 <script setup lang="jsx">
@@ -59,7 +61,6 @@ const columns = [
 
   // { colKey: 'detail.email', title: '邮箱地址', ellipsis: true },
   { colKey: 'createTime', title: '处理时间' },
-  { colKey: 'row-select', type: 'multiple', width: 46 },
 ];
 
 /**
@@ -94,13 +95,19 @@ const onSelectChange = (selectedRowKeys, context) => {
 </script>
 
 <style>
+.content{
+  width: 100%;
+  display: flex;
+}
 .chart_table {
   width: 55%;
   height: 100%;
   float: left;
+  flex:1;
+  padding-right: 10px;
 }
 .pie {
-  width: 40%;
+  flex:0.7 ;
   height: 650px;
   float: right;
   /* margin-left: 10px; */

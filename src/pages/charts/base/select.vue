@@ -12,11 +12,17 @@
         </t-select>
       </t-space>
     </div>
+    <div class="select_right">
     <div class="select_date">
       <t-space direction="vertical">
         <t-date-range-picker allow-input clearable @pick="onPick" @change="onChange" />
       </t-space>
     </div>
+    <div class="searchById">
+       <t-input @change="handleInput" placeholder="请输入查询ID"/>
+    </div>
+   </div>
+
   </div>
 </template>
 <script setup lang="jsx">
@@ -53,6 +59,7 @@ const onBlur = (ctx) => {
 };
 
 const onPick = (value, context) => console.log('onPick:', value, context);
+const handleInput = (value) => console.log('handleInput:', value);
 const onChange = (value, context) => {
   console.log('onChange:', value, context);
   console.log(
@@ -71,11 +78,23 @@ const onChange = (value, context) => {
   margin-bottom: 30px;
   padding: 20px 20px 30px 30px;
   display: flex;
-}
-.select_date{
-  flex: 1;
+  flex-direction: row;
 }
 .select_type{
-  flex: 1;
+  flex: 0.6;
+  width: 20%;
 }
+.select_right{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  cursor: pointer;
+}
+.select_date{
+    flex: 1;
+  }
+  .searchById{
+    flex: 1;
+    margin:20px 0 30px 0;
+  }
 </style>
