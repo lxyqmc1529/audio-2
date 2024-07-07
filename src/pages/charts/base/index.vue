@@ -1,5 +1,5 @@
 <template>
-  <Select @searchById="handleSearchById" @resetData="handleReset" />
+  <Select @searchById="handleSearchById" @resetData="handleReset" @changeDate="handleChangeDate"/>
   <div class="content">
   <div class="chart_table">
     <t-space direction="vertical">
@@ -51,7 +51,11 @@ for (let i = 0; i < TOTAL; i++) {
 const baseData = ref([]);
 baseData.value = data.value;
 const handleSearchById = (id) => {
-  data.value = data.value.filter((item) => item.index == id);
+  data.value = baseData.value.filter((item) => item.index == id);
+}
+const handleChangeDate = (date,context) => {
+  console.log('-----',date);
+  data.value = baseData.value.filter((item) => item.createTime >= date[0] && item.createTime <= date[1]);
 }
 const handleReset = () => {
   console.log('reset');

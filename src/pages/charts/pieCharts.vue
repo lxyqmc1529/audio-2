@@ -12,12 +12,6 @@ onMounted(() => {
 function init() {
   // 基于准备好的dom，初始化echarts实例
   const myChart = echarts.init(main.value);
-  const datas = [
-    [
-      { name: '正常', value: 32 },
-      { name: '异常', value: 1 },
-    ],
-  ];
   // 指定图表的配置项和数据
 const xAxisData = Array.from({ length: 24 }, (_, i) => i + 1).map(item => `${item}:00`);
 const yAxisData = Array.from({ length: 24 }, (_, i) => ({

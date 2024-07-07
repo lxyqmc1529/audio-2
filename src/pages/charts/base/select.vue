@@ -31,7 +31,7 @@
 <script setup lang="jsx">
 import { ref, defineEmits } from 'vue';
 
-const emit = defineEmits(['searchById'],['resetData']);
+const emit = defineEmits(['searchById'],['resetData'],['changeDate']);
 const options1 = [
   { label: '全选', checkAll: true },
   { label: '投诉', value: '1' },
@@ -70,15 +70,7 @@ const handleReset = () => {
   emit('resetData');
 }
 const onChange = (value, context) => {
-  console.log('onChange:', value, context);
-  console.log(
-    'timestamp:',
-    context.dayjsValue.map((d) => d.valueOf()),
-  );
-  console.log(
-    'YYYYMMDD:',
-    context.dayjsValue.map((d) => d.format('YYYYMMDD')),
-  );
+  emit('changeDate', value, context);
 };
 </script>
 <style scoped>
