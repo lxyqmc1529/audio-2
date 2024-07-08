@@ -2,8 +2,8 @@
   <div class="select">
     <div class="select_type">
       <t-space direction="vertical">
-        <t-select v-model="value1" :options="options1" placeholder="请选择" multiple @focus="onFocus" @blur="onBlur" @change="searchByType" />
-        <t-select v-model="value2" placeholder="请选择分类2" multiple @change="changeTypeTiny">
+       请选择分类1： <t-select v-model="value1" :options="options1" placeholder="请选择" multiple @focus="onFocus" @blur="onBlur" @change="searchByType" />
+       请选择分类2：<t-select v-model="value2" placeholder="请选择分类2" multiple @change="changeTypeTiny">
           <t-option label="全选" :check-all="true" />
           <t-option v-for="item in options2" :key="item.value" :value="item.value" :label="item.label"></t-option>
         </t-select>
