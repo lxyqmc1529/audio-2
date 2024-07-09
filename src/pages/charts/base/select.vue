@@ -2,8 +2,8 @@
   <div class="select">
     <div class="select_type">
       <t-space direction="vertical">
-       请选择分类1： <t-select v-model="value1" :options="options1" placeholder="请选择" multiple @focus="onFocus" @blur="onBlur" @change="searchByType" />
-       请选择分类2：<t-select v-model="value2" placeholder="请选择分类2" multiple @change="changeTypeTiny">
+       <t-select v-model="value1" :options="options1" placeholder="请选择" multiple @focus="onFocus" @blur="onBlur" @change="searchByType" />
+       <t-select v-model="value2" placeholder="请选择分类2" multiple @change="changeTypeTiny">
           <t-option label="全选" :check-all="true" />
           <t-option v-for="item in options2" :key="item.value" :value="item.value" :label="item.label"></t-option>
         </t-select>
@@ -23,6 +23,9 @@
       </div>
     </div>
 
+      <div class="dataShow">
+        <div class="dataShow_item">当日来电总量：{{ options1.length }}</div>
+      </div>
   </div>
 </template>
 <script setup lang="jsx">
@@ -117,4 +120,15 @@ const onChange = (value, context) => {
 .searchById {
   flex: 1;
   margin: 15px 0 30px 0;
-}</style>
+}
+.dataShow{
+  flex: 0.5;
+  padding-left: 20px;
+  padding-top: 5px;
+}
+.dataShow_item{
+  font-family: 'Courier New', Courier, monospace;
+  font-size: larger;
+  font-weight: 1000;
+}
+</style>

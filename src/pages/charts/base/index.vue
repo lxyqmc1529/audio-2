@@ -32,6 +32,7 @@ import PieChart from '../pieCharts.vue';
 import Select from './select.vue';
 
 const data = ref([]);
+const totalData = ref(102);
 const TOTAL = 59;
 for (let i = 0; i < TOTAL; i++) {
   data.value.push({
@@ -129,4 +130,5 @@ const onSelectChange = (selectedRowKeys, context) => {
   background-color: white;
   padding: 12px;
 }
+
 </style>
