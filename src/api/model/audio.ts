@@ -9,6 +9,7 @@ export interface AudioInfo {
   fileKey: string;
   status: AudioStatus;
   result: string;
+  tag: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -20,5 +21,6 @@ export interface GetAllAudioRes {
 }
 
 export interface UpdateAudioPayload {
-  result: string;
+  result?: string;
+  tag?: string;
 }

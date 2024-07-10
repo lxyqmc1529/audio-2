@@ -99,11 +99,11 @@ const columns = computed<PrimaryTableCol[]>(() => [
         : <t-tag theme="danger">检测失败</t-tag>,
   },
   {
-    title: '创建日期',
-    colKey: 'createdAt',
+    title: '更新日期',
+    colKey: 'updatedAt',
     className: 't-demo-col__datepicker',
     width: 200,
-    cell: (_h, { row }) => <div>{dayjs(row.createdAt).format('YYYY-MM-DD hh:mm:ss')}</div>,
+    cell: (_h, { row }) => <div>{dayjs(row.updatedAt).format('YYYY-MM-DD hh:mm:ss')}</div>,
   },
   {
     title: '操作栏',

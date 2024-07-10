@@ -23,11 +23,11 @@
 
 <script setup lang="tsx">
 import dayjs from 'dayjs';
-import { MessagePlugin, PageInfo, PrimaryTableCol,Input, Select, Textarea } from 'tdesign-vue-next';
+import { MessagePlugin, PageInfo, PrimaryTableCol,Input, Tag } from 'tdesign-vue-next';
 import { computed, onMounted, ref } from 'vue';
 
-import { getAllDetect } from '@/api/audio';
-import { AudioInfo, AudioStatus } from '@/api/model';
+import { getAllDetect, updateAudio } from '@/api/audio';
+import { AudioInfo } from '@/api/model';
 import editShow from '@/components/editShow.vue';
 
 const dataSource = ref<AudioInfo[]>([]);
@@ -35,17 +35,21 @@ const page = ref(1);
 const limit = ref(5);
 const total = ref(0);
 const loading = ref(false);
-const mockData = {
-  'class1': '车站规范',
-  'class2': '地铁运行',
-  'class3': '设施故障',
-}
 const loadAudioDetact = async () => {
   loading.value = true;
   try {
     const res = await getAllDetect(page.value, limit.value);
     total.value = res.total;
-    dataSource.value = res.data;
+    dataSource.value = res.data.map(item => {
+      const { tag } = item;
+      const [class1, class2, class3] = tag?.split('-') || [];
+      return {
+        ...item,
+        class1,
+        class2,
+        class3
+      }
+    })
   } catch (err) {
     MessagePlugin.error(err.message);
   }
@@ -64,14 +68,29 @@ const tableRef = ref();
 const align = ref('left');
 const editAudio = ref<AudioInfo | null>(null);
 
-const onEdit = (row: AudioInfo) => {
-  // editAudio.value = row;
-  // showChild.value = true;
-  alert('可编辑分类')
+const onSave = async (row: AudioInfo) => {
+  const { class1, class2, class3 } = row as any;
+  const tags = [class1, class2, class3].filter(Boolean);
+  if (tags.some(item => /\-/g.test(item))) {
+    MessagePlugin.warning('分类不能包含 "-" 符号')
+    return;
+  }
+  const tag = tags.join('-');
+  try {
+    await updateAudio(row.id, { tag })
+    MessagePlugin.success('更新数据成功')
+  } catch (err) {
+    MessagePlugin.error('更新数据失败，请重试')
+  }
 };
-const onSave = (row: AudioInfo) => {
-  alert('保存成功')
-};
+
+const onHandleEdit = (row: AudioInfo) => {
+  if ((row as any).isEdit) {
+    onSave(row);
+  } 
+  (row as any).isEdit = !(row as any).isEdit;
+}
+
 const confirmEditrAudioHandler = ({ id, editData }: { id: string; editData: any }) => {
   const audio = dataSource.value.find((item) => item.id === id);
   if (audio) {
@@ -98,17 +117,17 @@ const columns = computed<PrimaryTableCol[]>(() => [
     title: '分类1',
     colKey: 'status',
     width: 120,
-    cell: (_h, { row }) => <Input v-model={mockData.class1} />
+    cell: (_h, { row }) => row.isEdit ? <Input v-model={row.class1} /> : <Tag>{row.class1 || '暂无分类'}</Tag>
   }, {
     title: '分类2',
     colKey: 'status',
     width: 120,
-    cell: (_h, { row }) => <Input v-model={mockData.class2} />
+    cell: (_h, { row }) => row.isEdit ? <Input v-model={row.class2} /> : <Tag>{row.class2 || '暂无分类'}</Tag>
   }, {
     title: '分类3',
     colKey: 'status',
     width: 120,
-    cell: (_h, { row }) => <Input v-model={mockData.class3} />
+    cell: (_h, { row }) => row.isEdit ? <Input v-model={row.class3} /> : <Tag>{row.class3 || '暂无分类'}</Tag>
   },
   {
     title: '创建日期',
@@ -125,12 +144,8 @@ const columns = computed<PrimaryTableCol[]>(() => [
     cell: (_h, { row }) => {
       return (
         <div class="table-operations">
-          <t-link theme="primary" hover="color" data-id={row.key} onClick={() => onEdit(row)}>
-            编辑
-          </t-link>
-          <div class="table-operations__line"></div>
-          <t-link theme="primary" hover="color" data-id={row.key} onClick={() => onSave(row)}>
-            保存
+          <t-link v-if={!row.isEdit} theme="primary" hover="color" data-id={row.key} onClick={() => onHandleEdit(row)}>
+            { row.isEdit ? '保存' : '编辑' }
           </t-link>
         </div>
       );

@@ -38,7 +38,7 @@
 <script lang="ts" setup>
 // @ts-ignore
 import { EventSourcePolyfill } from 'event-source-polyfill';
-import type { PrimaryTableCol, RequestMethodResponse, UploadFile } from 'tdesign-vue-next';
+import { MessagePlugin, PrimaryTableCol, RequestMethodResponse, UploadFile } from 'tdesign-vue-next';
 import { computed, ref } from 'vue';
 
 import { detectAudio, uploadAudio } from '@/api/audio';
@@ -68,6 +68,11 @@ const columns: PrimaryTableCol[] = [
   {
     title: '识别文本',
     colKey: 'result',
+    align: 'left',
+  },
+  {
+    title: '分类',
+    colKey: 'tag',
     align: 'left',
   },
 ];
@@ -119,6 +124,7 @@ const startDetect = async () => {
   source.addEventListener('error', () => {
     source.close();
     detecting.value = false;
+    MessagePlugin.error('检测失败，请检查网络连接');
   });
   try {
     detecting.value = true;
