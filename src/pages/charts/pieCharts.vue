@@ -14,19 +14,14 @@ function init() {
   const myChart = echarts.init(main.value);
   // 指定图表的配置项和数据
 const xAxisData = Array.from({ length: 24 }, (_, i) => i + 1).map(item => `${item}:00`);
-const yAxisData = Array.from({ length: 24 }, (_, i) => ({
-    name: `数据${i + 1}`,
-    value: Math.floor(Math.random() * ((30-i)*Math.random())*6),
-  }));
-  const yAxisData2 = Array.from({ length: 24 }, (_, i) => ({
-    name: `数据${i + 1}`,
-    value: Math.floor(Math.random() * ((30-i)*Math.random())*5),
-  }));
-  const yAxisData3 = Array.from({ length: 24 }, (_, i) => ({
-    name: `数据${i + 1}`,
-    value: Math.floor(Math.random() * ((30-i)*Math.random())*4),
-  }));
+const yAxisData = [0,0,0,0,0,1,2,0,0,1,3,2,1,1,1,0,0,0,0,0,0]
+  const yAxisData2 =  [0,0,0,0,0,1,2,0,0,1,1,2,1,0,1,0,0,0,0,0,0]
+  const yAxisData3 =  [0,0,0,0,0,1,1,0,1,1,0,0,1,1,1,0,0,1,0,0,0]
   const option = {
+    title:{
+      text: '当日来电投诉问题类别TOP3',
+      left: 'center'
+    },
     tooltip: {
       trigger: 'axis',
       axisPointer: {
@@ -40,7 +35,8 @@ const yAxisData = Array.from({ length: 24 }, (_, i) => ({
     data: xAxisData
   },
   yAxis: {
-    type: 'value'
+    type: 'value',
+    minInterval: 1,
   },
   series: [
     {

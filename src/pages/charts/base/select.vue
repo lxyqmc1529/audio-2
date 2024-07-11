@@ -24,7 +24,7 @@
     </div>
 
       <div class="dataShow">
-        <div class="dataShow_item">当日来电总量：{{ 1079 }}</div>
+        <div class="dataShow_item">当日来电投诉总量：{{ 31 }}</div>
       </div>
   </div>
 </template>
@@ -33,9 +33,10 @@ import { ref, defineEmits } from 'vue';
 
 const emit = defineEmits(['searchById'],['resetData'],['changeDate'],['changeType'],['changeTypeTiny']);
 const options1 = [
-  { label: '车展管理', checkAll: true },
-  { label: '服务质量', value: '1' },
-  { label: '作业规范', value: '2' },
+  { label: '全选', checkAll: true },
+  { label: '综合类', value: '1' },
+  { label: '规范服务', value: '2' },
+  { label: '呕吐物', value: '2' },
   // 可以使用渲染函数自定义下拉选项内容和样式
   // {
   //   label: '计算场景',
@@ -45,10 +46,10 @@ const options1 = [
   // },
 ];
 const options2 = [
-  { label: '车站广播', value: '1' },
-  { label: '遗失物品', value: '2' },
-  { label: '专用通道', value: '3' },
-  { label: '客伤', value: '4' },
+  { label: '站车环境', value: '1' },
+  { label: '重复投诉', value: '2' },
+  { label: '客运组织', value: '3' },
+  { label: '规范服务', value: '4' },
 ];
 
 const value1 = ref(['1', '2']);

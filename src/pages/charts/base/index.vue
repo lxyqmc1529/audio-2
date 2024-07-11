@@ -37,7 +37,7 @@ const TOTAL = 59;
 for (let i = 0; i < TOTAL; i++) {
   data.value.push({
     index: i + 1,
-    applicant: ['55235589', '50567975', '15256376553','1242345532','124333082'][i % 5],
+    applicant: ['18917508475', '15721565601', '15145896222','18516245369','13661919436','13137787898','13916469214','13917762277'][i % 8],
     status: i % 3,
     channel: ['规范服务'][i % 1],
     detail: {
@@ -46,9 +46,9 @@ for (let i = 0; i < TOTAL; i++) {
     matters: ['宣传物料制作费用', 'algolia 服务报销', '相关周边制作费', '激励奖品快递费'][i % 4],
     time: [2, 3, 1, 4][i % 4],
     createTime: ['2024-07-01', '2024-07-01'][i % 2],
-    classify_1: ['规范服务'][i % 1],
-    classify_2: ['车站管理', '服务质量', '作业规范'][i % 3],
-    classify_3: ['车站广播', '客伤', '遗失物品', '专用通道'][i % 4],
+    classify_1: ['呕吐物','综合类','列车运行','致歉信','规范服务','夹人','列车运行','规范服务'][i % 8],
+    classify_2: ['站车环境', '重复投诉', '客运组织','规范服务','作业规范','列车运行','列车延误','服务质量'][i % 8],
+    classify_3: ['站车卫生', '服务质量', '列车自动广播', '服务质量','求助等候','客运组织','线路拥堵','服务态度'][i % 5],
   });
 }
 const baseData = ref([]);
@@ -76,14 +76,14 @@ const reserveSelectedRowOnPaginate = ref(true);
 const selectedRowKeys = ref([]);
 
 const columns = [
-  { colKey: 'serial-number', width: 80, title: '序号' },
-  { colKey: 'applicant', title: '语音文件ID', width: '100' },
-  { colKey: 'classify_1', title: '分类1', width: '120' },
-  { colKey: 'classify_2', title: '分类2', width: '120' },
-  { colKey: 'classify_3', title: '分类3', width: '120' },
+  { colKey: 'serial-number', width: 100, title: '序号' },
+  { colKey: 'applicant', title: '语音文件ID', width: 200 },
+  { colKey: 'classify_1', title: '分类1', width: 200 },
+  { colKey: 'classify_2', title: '分类2', width: 200},
+  { colKey: 'classify_3', title: '分类3', width: 200 },
 
   // { colKey: 'detail.email', title: '邮箱地址', ellipsis: true },
-  { colKey: 'createTime', title: '处理时间' },
+  { colKey: 'createTime', title: '处理时间',width: 200  },
 ];
 
 const pagination = reactive({
