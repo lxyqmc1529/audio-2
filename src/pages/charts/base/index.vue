@@ -37,18 +37,18 @@ const TOTAL = 59;
 for (let i = 0; i < TOTAL; i++) {
   data.value.push({
     index: i + 1,
-    applicant: ['1', '2', '3'][i % 3],
+    applicant: ['55235589', '50567975', '15256376553','1242345532','124333082'][i % 5],
     status: i % 3,
-    channel: ['投诉', '查询'][i % 2],
+    channel: ['规范服务'][i % 1],
     detail: {
       email: ['w.cezkdudy@lhll.au', 'r.nmgw@peurezgn.sl', 'p.cumx@rampblpa.ru'][i % 3],
     },
     matters: ['宣传物料制作费用', 'algolia 服务报销', '相关周边制作费', '激励奖品快递费'][i % 4],
     time: [2, 3, 1, 4][i % 4],
-    createTime: ['2022-01-01', '2022-02-01', '2022-03-01', '2022-04-01', '2022-05-01'][i % 4],
-    classify_1: ['投诉', '查询'][i % 2],
-    classify_2: ['呕吐物', '空调', '车厢', '自动扶梯'][i % 3],
-    classify_3: ['陆家浜路', '松江大学城', '中山北路', '一大会址黄陂南路'][i % 4],
+    createTime: ['2024-07-01', '2024-07-01'][i % 2],
+    classify_1: ['规范服务'][i % 1],
+    classify_2: ['车站管理', '服务质量', '作业规范'][i % 3],
+    classify_3: ['车站广播', '客伤', '遗失物品', '专用通道'][i % 4],
   });
 }
 const baseData = ref([]);

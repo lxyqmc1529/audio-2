@@ -16,7 +16,15 @@ function init() {
 const xAxisData = Array.from({ length: 24 }, (_, i) => i + 1).map(item => `${item}:00`);
 const yAxisData = Array.from({ length: 24 }, (_, i) => ({
     name: `数据${i + 1}`,
-    value: Math.floor(Math.random() * 100 * i),
+    value: Math.floor(Math.random() * ((30-i)*Math.random())*6),
+  }));
+  const yAxisData2 = Array.from({ length: 24 }, (_, i) => ({
+    name: `数据${i + 1}`,
+    value: Math.floor(Math.random() * ((30-i)*Math.random())*5),
+  }));
+  const yAxisData3 = Array.from({ length: 24 }, (_, i) => ({
+    name: `数据${i + 1}`,
+    value: Math.floor(Math.random() * ((30-i)*Math.random())*4),
   }));
   const option = {
     tooltip: {
@@ -39,7 +47,18 @@ const yAxisData = Array.from({ length: 24 }, (_, i) => ({
       data: yAxisData,
       type: 'line',
       smooth: true,
-      name: '空调温度',
+      name: '车站广播',
+    },
+    {
+      data: yAxisData2,
+      type: 'line',
+      smooth: true,
+      name: '客伤',
+    },{
+      data: yAxisData3,
+      type: 'line',
+      smooth: true,
+      name: '专用通道',
     },
   ]
 };
