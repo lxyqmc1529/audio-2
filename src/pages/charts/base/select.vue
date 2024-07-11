@@ -24,7 +24,7 @@
     </div>
 
       <div class="dataShow">
-        <div class="dataShow_item">当日来电投诉总量：{{ 31 }}</div>
+        <div class="dataShow_item">当日来电投诉总量：{{ 12 }}</div>
       </div>
   </div>
 </template>
@@ -36,7 +36,8 @@ const options1 = [
   { label: '全选', checkAll: true },
   { label: '综合类', value: '1' },
   { label: '规范服务', value: '2' },
-  { label: '呕吐物', value: '2' },
+  { label: '呕吐物', value: '3' },
+  { label: '投诉全选', value: '4' }
   // 可以使用渲染函数自定义下拉选项内容和样式
   // {
   //   label: '计算场景',

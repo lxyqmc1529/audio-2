@@ -14,13 +14,20 @@ function init() {
   const myChart = echarts.init(main.value);
   // 指定图表的配置项和数据
 const xAxisData = Array.from({ length: 24 }, (_, i) => i + 1).map(item => `${item}:00`);
-const yAxisData = [0,0,0,0,0,1,2,0,0,1,3,2,1,1,1,0,0,0,0,0,0]
-  const yAxisData2 =  [0,0,0,0,0,1,2,0,0,1,1,2,1,0,1,0,0,0,0,0,0]
-  const yAxisData3 =  [0,0,0,0,0,1,1,0,1,1,0,0,1,1,1,0,0,1,0,0,0]
+const yAxisData = [0,0,0,0,0,0,0,0,0,0,0,3,1,1,1,0,0,0,0,0,0]
+  const yAxisData2 =  [0,0,0,0,0,1,0,0,0,1,0,1,0,0,1,0,0,0,0,0,0]
+  const yAxisData3 =  [0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0]
   const option = {
     title:{
       text: '当日来电投诉问题类别TOP3',
-      left: 'center'
+      left: 'left'
+    },
+    legend:{
+      right: 10,
+      top: 30,
+    },
+    grid:{
+      top: 100,
     },
     tooltip: {
       trigger: 'axis',
@@ -43,7 +50,7 @@ const yAxisData = [0,0,0,0,0,1,2,0,0,1,3,2,1,1,1,0,0,0,0,0,0]
       data: yAxisData,
       type: 'line',
       smooth: true,
-      name: '车站广播',
+      name: '闷热',
     },
     {
       data: yAxisData2,
@@ -54,7 +61,7 @@ const yAxisData = [0,0,0,0,0,1,2,0,0,1,3,2,1,1,1,0,0,0,0,0,0]
       data: yAxisData3,
       type: 'line',
       smooth: true,
-      name: '专用通道',
+      name: '站车卫生',
     },
   ]
 };
