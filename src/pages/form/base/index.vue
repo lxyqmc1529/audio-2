@@ -96,7 +96,7 @@ const columns = computed<PrimaryTableCol[]>(() => [
         ? <t-tag theme="primary">待检测</t-tag>
         : row.status === AudioStatus.success
         ? <t-tag theme="success">检测成功</t-tag>
-        : <t-tag theme="danger">检测失败</t-tag>,
+        : <t-tag theme="primary">待检测</t-tag>,
   },
   {
     title: '更新日期',

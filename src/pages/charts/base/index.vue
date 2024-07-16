@@ -19,7 +19,8 @@
       </t-space>
       </div>
       <div class="pie">
-        <pie-chart />
+        <lineToChart />
+        <pieChart />
       </div>
     </t-space>
   </div>
@@ -28,9 +29,9 @@
 <script setup lang="jsx">
 import { reactive, ref } from 'vue';
 
-import PieChart from '../pieCharts.vue';
+import lineToChart from '../lineToCharts.vue';
 import Select from './select.vue';
-
+import pieChart from '../pieCharts.vue';
 const data = ref([]);
 const totalData = ref(102);
 const TOTAL = 59;

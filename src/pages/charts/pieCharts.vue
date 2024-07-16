@@ -13,56 +13,39 @@ function init() {
   // 基于准备好的dom，初始化echarts实例
   const myChart = echarts.init(main.value);
   // 指定图表的配置项和数据
-const xAxisData = Array.from({ length: 24 }, (_, i) => i + 1).map(item => `${item}:00`);
-const yAxisData = [0,0,0,0,0,0,0,0,0,0,0,3,1,1,1,0,0,0,0,0,0]
-  const yAxisData2 =  [0,0,0,0,0,1,0,0,0,1,0,1,0,0,1,0,0,0,0,0,0]
-  const yAxisData3 =  [0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0]
   const option = {
-    title:{
-      text: '当日来电投诉问题类别TOP3',
-      left: 'left'
-    },
-    legend:{
-      right: 10,
-      top: 30,
-    },
-    grid:{
-      top: 100,
-    },
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow'
-      }
-    },
-  xAxis: {
-    type: 'category',
-    boundarygap: false,
-    showAllTickLabels: true,
-    data: xAxisData
+  title: {
+    text: '当日类别占比',
+    left: 'right'
   },
-  yAxis: {
-    type: 'value',
-    minInterval: 1,
+  tooltip: {
+    trigger: 'item'
+  },
+  legend: {
+    orient: 'vertical',
+    left: 'left',
+
   },
   series: [
     {
-      data: yAxisData,
-      type: 'line',
-      smooth: true,
-      name: '闷热',
-    },
-    {
-      data: yAxisData2,
-      type: 'line',
-      smooth: true,
-      name: '客伤',
-    },{
-      data: yAxisData3,
-      type: 'line',
-      smooth: true,
-      name: '站车卫生',
-    },
+      name: 'Access From',
+      type: 'pie',
+      radius: '50%',
+      data: [
+        { value: 1048, name: 'Search Engine' },
+        { value: 735, name: 'Direct' },
+        { value: 580, name: 'Email' },
+        { value: 484, name: 'Union Ads' },
+        { value: 300, name: 'Video Ads' }
+      ],
+      emphasis: {
+        itemStyle: {
+          shadowBlur: 10,
+          shadowOffsetX: 0,
+          shadowColor: 'rgba(0, 0, 0, 0.5)'
+        }
+      }
+    }
   ]
 };
   myChart.setOption(option);
