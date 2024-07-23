@@ -13,13 +13,13 @@ function init() {
   // 基于准备好的dom，初始化echarts实例
   const myChart = echarts.init(main.value);
   // 指定图表的配置项和数据
-const xAxisData = Array.from({ length: 24 }, (_, i) => i + 1).map(item => `${item}:00`);
-const yAxisData = [0,0,0,0,0,0,0,0,0,0,0,3,1,1,1,0,0,0,0,0,0]
-  const yAxisData2 =  [0,0,0,0,0,1,0,0,0,1,0,1,0,0,1,0,0,0,0,0,0]
-  const yAxisData3 =  [0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0]
+const xAxisData = Array.from({ length: 24 }, (_, i) => i ).map(item => `${item}:00`);
+const yAxisData = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,1,1,1,0,0,0,0,0,0]
+  const yAxisData2 =  [0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,1,0,0,0,0,0,0]
+  const yAxisData3 =  [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0]
   const option = {
     title:{
-      text: '当日来电投诉问题类别TOP3',
+      text: '来电投诉问题类别TOP3',
       left: 'left'
     },
     legend:{
@@ -37,13 +37,30 @@ const yAxisData = [0,0,0,0,0,0,0,0,0,0,0,3,1,1,1,0,0,0,0,0,0]
     },
   xAxis: {
     type: 'category',
+    min: '00:00', // 最小时间
+        max: '24:00', // 最大时间
     boundarygap: false,
     showAllTickLabels: true,
     data: xAxisData
   },
   yAxis: {
     type: 'value',
+    show:true,
     minInterval: 1,
+    axisLabel: {
+            show: true,
+            color: '#333' // 设置 y 轴刻度标签颜色
+        },
+        axisLine: {
+            show: true,
+            lineStyle: {
+                color: '#999' // 设置 y 轴轴线颜色
+            }
+        },
+        axisTick: {
+            show: true,
+            length: 10 // 设置 y 轴刻度线长度
+        }
   },
   series: [
     {

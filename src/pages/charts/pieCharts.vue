@@ -15,7 +15,7 @@ function init() {
   // 指定图表的配置项和数据
   const option = {
   title: {
-    text: '当日类别占比',
+    text: '类别占比',
     left: 'right'
   },
   tooltip: {
