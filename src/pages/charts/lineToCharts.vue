@@ -1,5 +1,5 @@
 <template>
-  <div class="chart-container"  ref="main" style="width:100%; height: 250px"></div>
+  <div class="chart-container"  ref="main" style="width:100%; height: 280px"></div>
 </template>
 <script lang="ts" setup>
 import * as echarts from 'echarts'; //  按需引入 echarts
