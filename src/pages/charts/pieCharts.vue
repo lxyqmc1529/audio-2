@@ -1,5 +1,5 @@
 <template>
-  <div class="chart-container"  ref="main" style="width:100%; height: 400px"></div>
+  <div class="chart-container"  ref="main" style="width:100%; height: 300px"></div>
 </template>
 <script lang="ts" setup>
 import * as echarts from 'echarts'; //  按需引入 echarts
@@ -21,22 +21,29 @@ function init() {
   tooltip: {
     trigger: 'item'
   },
-  legend: {
-    orient: 'vertical',
-    left: 'left',
-
-  },
   series: [
     {
       name: 'Access From',
       type: 'pie',
       radius: '50%',
       data: [
-        { value: 1048, name: 'Search Engine' },
-        { value: 735, name: 'Direct' },
-        { value: 580, name: 'Email' },
-        { value: 484, name: 'Union Ads' },
-        { value: 300, name: 'Video Ads' }
+        { value: 1, name: '规范用语' },
+        { value: 2, name: '票款差错' },
+        { value: 1, name: '服务承诺' },
+        { value: 4, name: '服务态度' },
+        { value: 1, name: '客伤' },
+        { value:3, name: '物损' },
+        { value: 0, name: '遗失物品' },
+        { value: 1, name: '专用通道' },
+        { value: 1, name: '秩序管理' },
+        { value: 0, name: '吸烟' },
+        { value: 1, name: '车站导向' },
+        { value: 1, name: '车站张贴物' },
+        { value: 2, name: '携带物品' },
+        { value:3, name: '逃票' },
+        { value: 1, name: '同站进出' },
+        { value: 1, name: '发票' },
+        { value: 1, name: '车站广播' }
       ],
       emphasis: {
         itemStyle: {

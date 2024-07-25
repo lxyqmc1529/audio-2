@@ -1,5 +1,5 @@
 <template>
-  <div class="chart-container"  ref="main" style="width:100%; height: 400px"></div>
+  <div class="chart-container"  ref="main" style="width:100%; height: 250px"></div>
 </template>
 <script lang="ts" setup>
 import * as echarts from 'echarts'; //  按需引入 echarts
@@ -27,7 +27,8 @@ const yAxisData = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,1,1,1,0,0,0,0,0,0]
       top: 30,
     },
     grid:{
-      top: 100,
+      top: 70,
+      bottom:20
     },
     tooltip: {
       trigger: 'axis',
@@ -37,11 +38,10 @@ const yAxisData = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,1,1,1,0,0,0,0,0,0]
     },
   xAxis: {
     type: 'category',
-    min: '00:00', // 最小时间
-        max: '24:00', // 最大时间
     boundarygap: false,
     showAllTickLabels: true,
-    data: xAxisData
+    data: xAxisData,
+    interval: 4,
   },
   yAxis: {
     type: 'value',

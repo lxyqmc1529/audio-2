@@ -19,17 +19,22 @@
         <t-input @change="handleInput" placeholder="请输入查询ID" />
         <div style="margin-top: 10px">
           <t-button type="primary" @click="handleReset">重置查询条件</t-button>
+          <t-button>  <template #icon> <cloud-download-icon /></template>导出数据</t-button>
         </div>
       </div>
     </div>
 
       <div class="dataShow">
         <div class="dataShow_item">2024-7-1 来电投诉总量：{{ 12 }}</div>
+        <div>
+        </div>
+        
       </div>
   </div>
 </template>
 <script setup lang="jsx">
 import { ref, defineEmits } from 'vue';
+import {  CloudDownloadIcon } from 'tdesign-icons-vue-next';
 
 const emit = defineEmits(['searchById'],['resetData'],['changeDate'],['changeType'],['changeTypeTiny']);
 const options1 = [
@@ -96,6 +101,7 @@ const onChange = (value, context) => {
 </script>
 <style scoped>
 .select {
+  width: 100%;
   background-color: white;
   margin-bottom: 30px;
   padding: 20px 20px 30px 30px;

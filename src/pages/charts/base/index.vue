@@ -34,7 +34,7 @@ import Select from './select.vue';
 import pieChart from '../pieCharts.vue';
 const data = ref([]);
 const totalData = ref(102);
-const TOTAL = 59;
+const TOTAL = 8;
 for (let i = 0; i < TOTAL; i++) {
   data.value.push({
     index: i + 1,
@@ -89,10 +89,10 @@ const columns = [
 
 const pagination = reactive({
   current: 1,
-  pageSize: 10,
+  pageSize: 8,
   // defaultCurrent: 2,
   // defaultPageSize: 5,
-  total: TOTAL,
+  total: TOTAL + 4,
   showJumper: true,
 });
 
