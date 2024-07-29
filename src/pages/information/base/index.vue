@@ -1,5 +1,4 @@
 <template>
-  <editShow v-model:visible="showChild" :audio="editAudio" @save="confirmEditrAudioHandler" />
 
   <div class="t-table-demo__editable-row audio-detect-table-wrap">
     <t-table
@@ -27,7 +26,6 @@ import { MessagePlugin, PageInfo, PrimaryTableCol,Input, Tag } from 'tdesign-vue
 import { computed, onMounted, ref } from 'vue';
 import { getAllDetect, updateAudio } from '@/api/audio';
 import { AudioInfo } from '@/api/model';
-import editShow from '@/components/editShow.vue';
 
 const dataSource = ref<AudioInfo[]>([]);
 const page = ref(1);
