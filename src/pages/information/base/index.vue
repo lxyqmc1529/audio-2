@@ -1,5 +1,4 @@
 <template>
-
   <div class="t-table-demo__editable-row audio-detect-table-wrap">
     <t-table
       ref="tableRef"
@@ -22,7 +21,7 @@
 
 <script setup lang="tsx">
 import dayjs from 'dayjs';
-import { MessagePlugin, PageInfo, PrimaryTableCol,Input, Tag } from 'tdesign-vue-next';
+import { MessagePlugin, PageInfo, PrimaryTableCol,Select, Tag } from 'tdesign-vue-next';
 import { computed, onMounted, ref } from 'vue';
 import { getAllDetect, updateAudio } from '@/api/audio';
 import { AudioInfo } from '@/api/model';
@@ -114,17 +113,17 @@ const columns = computed<PrimaryTableCol[]>(() => [
     title: '分类1',
     colKey: 'status',
     width: 120,
-    cell: (_h, { row }) => row.isEdit ? <Input v-model={row.class1} /> : <Tag>{row.class1 || '暂无分类'}</Tag>
+    cell: (_h, { row }) => row.isEdit ? <Select  v-model={row.class1} /> : <Tag>{row.class1 || '暂无分类'}</Tag>
   }, {
     title: '分类2',
     colKey: 'status',
     width: 120,
-    cell: (_h, { row }) => row.isEdit ? <Input v-model={row.class2} /> : <Tag>{row.class2 || '暂无分类'}</Tag>
+    cell: (_h, { row }) => row.isEdit ? <Select v-model={row.class2} /> : <Tag>{row.class2 || '暂无分类'}</Tag>
   }, {
     title: '分类3',
     colKey: 'status',
     width: 120,
-    cell: (_h, { row }) => row.isEdit ? <Input v-model={row.class3} /> : <Tag>{row.class3 || '暂无分类'}</Tag>
+    cell: (_h, { row }) => row.isEdit ? <Select v-model={row.class3} /> : <Tag>{row.class3 || '暂无分类'}</Tag>
   },
   {
     title: '创建日期',
