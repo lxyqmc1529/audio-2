@@ -5,20 +5,16 @@
     <t-space>
       <div class="chart_table">
         <t-space direction="vertical">
-          <t-table row-key="index" :data="data" :columns="columns"
-            :pagination="{
-  current: current,
-  pageSize: pageSize,
-  total: total,
-}" 
-            table-layout="fixed"
-      lazy-load @page-change="reloadAudioData"
-       />
+          <t-table row-key="index" :data="data" :columns="columns" :pagination="{
+            current: current,
+            pageSize: pageSize,
+            total: total,
+          }" table-layout="fixed" lazy-load @page-change="reloadAudioData" />
         </t-space>
       </div>
       <div class="pie">
-        <lineToChart />
-        <pieChart />
+        <lineToChart :dataSource="data"/>
+        <pieChart :dataSource="data" />
       </div>
     </t-space>
   </div>
@@ -29,7 +25,6 @@ import dayjs from 'dayjs';
 import { reactive, ref, onMounted } from 'vue';
 import { MessagePlugin } from 'tdesign-vue-next';
 import { getAllDetect, updateAudio } from '@/api/audio';
-
 import lineToChart from '../lineToCharts.vue';
 import Select from './select.vue';
 import pieChart from '../pieCharts.vue';
@@ -62,15 +57,13 @@ const loadAudioDetact = async () => {
       return {
         index: index,
         applicant: item.filename,
-        createTime: dayjs(item.createdAt).format("YYYY-MM-DD") ,
+        createTime: dayjs(item.createdAt).format("YYYY-MM-DD"),
         classify_1: item.class1,
         classify_2: item.class2,
         classify_3: item.class3,
       }
     })
     baseData.value = data.value;
-    console.log(total.value)
-
   } catch (err) {
     MessagePlugin.error(err.message);
   }
@@ -82,8 +75,8 @@ const reloadAudioData = (pageInfo) => {
 };
 onMounted(loadAudioDetact);
 const handleSearchById = (id) => {
-  data.value = data.value.filter((item) => 
-  item.applicant.includes(id)
+  data.value = data.value.filter((item) =>
+    item.applicant.includes(id)
   );
 }
 const handleChangeDate = (date, context) => {
