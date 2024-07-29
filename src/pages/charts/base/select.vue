@@ -43,13 +43,6 @@ const options1 = [
   { label: '规范服务', value: '2' },
   { label: '呕吐物', value: '3' },
   { label: '投诉全选', value: '4' }
-  // 可以使用渲染函数自定义下拉选项内容和样式
-  // {
-  //   label: '计算场景',
-  //   value: '6',
-  //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  //   content: (h) => <span>计算场景（高性能计算）</span>,
-  // },
 ];
 const options2 = [
   { label: '站车环境', value: '1' },

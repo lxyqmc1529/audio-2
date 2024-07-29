@@ -25,7 +25,6 @@
 import dayjs from 'dayjs';
 import { MessagePlugin, PageInfo, PrimaryTableCol,Input, Tag } from 'tdesign-vue-next';
 import { computed, onMounted, ref } from 'vue';
-
 import { getAllDetect, updateAudio } from '@/api/audio';
 import { AudioInfo } from '@/api/model';
 import editShow from '@/components/editShow.vue';

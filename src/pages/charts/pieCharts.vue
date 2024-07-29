@@ -16,35 +16,41 @@ function init() {
   const option = {
   title: {
     text: '类别占比',
-    left: 'right'
+    left: 'left'
   },
   tooltip: {
-    trigger: 'item'
-  },
+      trigger: 'item',
+      formatter: '{a} <br/>{b}: {c} ({d}%)'
+    },
+  
   series: [
     {
       name: 'Access From',
       type: 'pie',
       radius: '50%',
       data: [
-        { value: 1, name: '规范用语' },
-        { value: 2, name: '票款差错' },
+        { value: 2, name: '站车卫生' },
+        { value: 1, name: '票款差错' },
         { value: 1, name: '服务承诺' },
-        { value: 4, name: '服务态度' },
-        { value: 1, name: '客伤' },
-        { value:3, name: '物损' },
-        { value: 0, name: '遗失物品' },
+        { value: 3, name: '闷热' },
+        { value: 2, name: '客伤' },
+        { value:1, name: '物损' },
+        { value: 1, name: '遗失物品' },
         { value: 1, name: '专用通道' },
-        { value: 1, name: '秩序管理' },
-        { value: 0, name: '吸烟' },
-        { value: 1, name: '车站导向' },
-        { value: 1, name: '车站张贴物' },
-        { value: 2, name: '携带物品' },
-        { value:3, name: '逃票' },
-        { value: 1, name: '同站进出' },
-        { value: 1, name: '发票' },
-        { value: 1, name: '车站广播' }
       ],
+      label: {
+        normal: {
+          formatter: '{b}\n{d}%'
+        }
+      },
+      labelLine: {
+        normal: {
+          show: true,
+          length: 10, // 调整引导线的长度
+          length2: 20, // 调整第二段引导线的长度，用于控制标签与扇区的距离
+          smooth: false // 是否平滑曲线显示，根据需要设置
+        }
+      },
       emphasis: {
         itemStyle: {
           shadowBlur: 10,

@@ -14,9 +14,9 @@ function init() {
   const myChart = echarts.init(main.value);
   // 指定图表的配置项和数据
 const xAxisData = Array.from({ length: 24 }, (_, i) => i ).map(item => `${item}:00`);
-const yAxisData = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,1,1,1,0,0,0,0,0,0]
-  const yAxisData2 =  [0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,1,0,0,0,0,0,0]
-  const yAxisData3 =  [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0]
+const yAxisData = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0]
+  const yAxisData2 =  [0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0]
+  const yAxisData3 =  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0]
   const option = {
     title:{
       text: '来电投诉问题类别TOP3',
