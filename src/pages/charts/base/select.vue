@@ -19,7 +19,7 @@
         <t-input @change="handleInput" placeholder="请输入查询ID" />
         <div style="margin-top: 10px">
           <t-button type="primary" @click="handleReset">重置查询条件</t-button>
-          <t-button>  <template #icon> <cloud-download-icon /></template>导出数据</t-button>
+          <t-button @click="exportAllData">  <template #icon> <cloud-download-icon /></template>导出数据</t-button>
         </div>
       </div>
     </div>
@@ -35,6 +35,11 @@
 <script setup lang="jsx">
 import { ref, defineEmits } from 'vue';
 import {  CloudDownloadIcon } from 'tdesign-icons-vue-next';
+import { MessagePlugin } from 'tdesign-vue-next';
+import { getAllDetect } from '@/api/audio';
+import { columns } from './constant';
+import dayjs from 'dayjs';
+import * as XLSX from 'xlsx';
 
 const emit = defineEmits(['searchById'],['resetData'],['changeDate'],['changeType'],['changeTypeTiny']);
 const options1 = [
@@ -91,6 +96,34 @@ const handleReset = () => {
 const onChange = (value, context) => {
   emit('changeDate', value, context);
 };
+
+const exportAllData = async () => {
+  const loading = MessagePlugin.loading('正在导出数据，请稍后...', 0);
+  const allData = await getAllDetect();
+  
+  const csvData = allData.map((item, index) => {
+    const [class1, class2, class3] = item.tag?.split('-') || [];
+    return {
+      [columns[0].title]: index,
+      [columns[1].title]: item.filename,
+      [columns[2].title]: dayjs(item.createdAt).format("YYYY-MM-DD"),
+      [columns[3].title]: class1,
+      [columns[4].title]: class2,
+      [columns[5].title]: class3,
+    }
+  })
+
+  const workbook = XLSX.utils.book_new();
+  // 创建工作表
+  const worksheet = XLSX.utils.json_to_sheet(csvData);
+
+  // 将工作表添加到工作簿
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+  // 保存为CSV文件
+  XLSX.writeFile(workbook, `数据报表.csv`);
+  MessagePlugin.close(loading)
+}
 </script>
 <style scoped>
 .select {

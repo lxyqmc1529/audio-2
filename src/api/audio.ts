@@ -4,8 +4,9 @@ import { request } from '@/utils/request';
 const Api = {
   Upload: '/audio/upload',
   Detect: '/audio/detect',
-  GetAll: '/audio/getAll',
+  List: '/audio/list',
   UpdateAudio: '/audio/:id',
+  GetAll: '/audio/getAll'
 };
 
 export function uploadAudio(payload: FormData) {
@@ -26,9 +27,9 @@ export function detectAudio(payload: { ids: string[] }) {
   });
 }
 
-export function getAllDetect(page: number, limit: number) {
+export function listDetect(page: number, limit: number) {
   return request.get<GetAllAudioRes>({
-    url: Api.GetAll,
+    url: Api.List,
     params: { page, limit },
   });
 }
@@ -38,4 +39,10 @@ export function updateAudio(id: string, payload: UpdateAudioPayload) {
     url: Api.UpdateAudio.replace(/:id/, id),
     data: payload,
   });
+}
+
+export function getAllDetect() {
+  return request.get<AudioInfo[]>({
+    url: Api.GetAll,
+  })
 }

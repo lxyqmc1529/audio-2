@@ -26,7 +26,7 @@ import dayjs from 'dayjs';
 import { MessagePlugin, PageInfo, PrimaryTableCol } from 'tdesign-vue-next';
 import { computed, onMounted, ref } from 'vue';
 
-import { getAllDetect } from '@/api/audio';
+import { listDetect } from '@/api/audio';
 import { AudioInfo, AudioStatus } from '@/api/model';
 import editShow from '@/components/editShow.vue';
 
@@ -39,7 +39,7 @@ const loading = ref(false);
 const loadAudioDetact = async () => {
   loading.value = true;
   try {
-    const res = await getAllDetect(page.value, limit.value);
+    const res = await listDetect(page.value, limit.value);
     total.value = res.total;
     dataSource.value = res.data;
   } catch (err) {

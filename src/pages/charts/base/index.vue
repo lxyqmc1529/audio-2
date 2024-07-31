@@ -24,10 +24,12 @@
 import dayjs from 'dayjs';
 import { reactive, ref, onMounted } from 'vue';
 import { MessagePlugin } from 'tdesign-vue-next';
-import { getAllDetect, updateAudio } from '@/api/audio';
+import { listDetect, updateAudio } from '@/api/audio';
 import lineToChart from '../lineToCharts.vue';
 import Select from './select.vue';
 import pieChart from '../pieCharts.vue';
+import { columns } from './constant'
+
 const data = ref([]);
 const page = ref(1);
 const limit = ref(8);
@@ -41,7 +43,7 @@ const pagination = ref();
 const loadAudioDetact = async () => {
   loading.value = true;
   try {
-    const res = await getAllDetect(page.value, limit.value);
+    const res = await listDetect(page.value, limit.value);
     total.value = res.total
     data.value = res.data.map(item => {
       const { tag } = item;
@@ -95,18 +97,6 @@ const handleSearchByTypeTiny = (type) => {
   );
 }
 const reserveSelectedRowOnPaginate = ref(true);
-
-const columns = [
-  { colKey: 'serial-number', width: 100, title: '序号' },
-  { colKey: 'applicant', title: '语音文件ID', width: 200 },
-  { colKey: 'classify_1', title: '分类1', width: 200 },
-  { colKey: 'classify_2', title: '分类2', width: 200 },
-  { colKey: 'classify_3', title: '分类3', width: 200 },
-  { colKey: 'createTime', title: '处理时间', width: 200 },
-];
-
-
-
 </script>
 
 <style>
