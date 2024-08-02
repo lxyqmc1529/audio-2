@@ -1,6 +1,5 @@
 <template>
   <editShow v-model:visible="showChild" :audio="editAudio" @save="confirmEditrAudioHandler" />
-
   <div class="t-table-demo__editable-row audio-detect-table-wrap">
     <t-table
       ref="tableRef"

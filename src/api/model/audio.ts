@@ -12,6 +12,7 @@ export interface AudioInfo {
   tag: string | null;
   createdAt: string;
   updatedAt: string;
+  [key: string]: any;
 }
 
 export interface GetAllAudioRes {

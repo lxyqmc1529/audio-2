@@ -30,7 +30,20 @@
           :columns="columns"
           bordered
           lazy-load
-        ></t-table>
+        >
+          <template #line="{ row }">
+            <div v-if="row.line">
+              <Tag theme="success" v-for="(line, index) in row.line.split('-')" :key="index">{{ line }}</Tag>
+            </div>
+            <Tag v-else>暂无线路</Tag>
+          </template>
+          <template #address="{ row }">
+            <div v-if="row.address">
+              <Tag style="margin-right: 8px; margin-bottom: 8px;" theme="success" v-for="(add, index) in row.address.split('-')" :key="index">{{ add }}</Tag>
+            </div>
+            <Tag v-else>暂无线路</Tag>
+          </template>
+        </t-table>
       </div>
     </template>
   </div>
@@ -38,7 +51,7 @@
 <script lang="ts" setup>
 // @ts-ignore
 import { EventSourcePolyfill } from 'event-source-polyfill';
-import { MessagePlugin, PrimaryTableCol, RequestMethodResponse, UploadFile } from 'tdesign-vue-next';
+import { MessagePlugin, PrimaryTableCol, RequestMethodResponse, UploadFile, Tag } from 'tdesign-vue-next';
 import { computed, ref } from 'vue';
 
 import { detectAudio, uploadAudio } from '@/api/audio';
@@ -75,6 +88,16 @@ const columns: PrimaryTableCol[] = [
     colKey: 'tag',
     align: 'left',
   },
+  {
+    title: '线路',
+    colKey: 'line',
+    align: 'left',
+  },
+  {
+    title: '站点',
+    colKey: 'address',
+    align: 'left',
+  }
 ];
 
 const audioUpload = async (files: UploadFile[]): Promise<RequestMethodResponse> => {
@@ -108,6 +131,7 @@ const startDetect = async () => {
     headers: {
       'x-token': accessToken,
     },
+    heartbeatTimeout: 10 * 60 * 1000, // 10分钟心跳超时时间
   });
   source.addEventListener('message', (e: any) => {
     const data = parseJSONWithCatch(e.data);

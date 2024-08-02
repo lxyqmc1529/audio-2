@@ -15,16 +15,58 @@
       }"
       :loading="loading"
       @page-change="reloadAudioData"
-    />
+    >
+      <template #class1="{ row }">
+        <Tag v-if="row.id !== editId">{{row.class1 || '暂无分类'}}</Tag>
+        <Select v-else v-model="editClassfiy[0]">
+          <Option v-for="(item, index) of firstClassifyOptions" :key="index" :value="item">{{ item }}</Option>
+        </Select>
+      </template>
+      <template #class2="{ row }">
+        <Tag v-if="row.id !== editId">{{row.class2 || '暂无分类'}}</Tag>
+        <Select v-else v-model="editClassfiy[1]">
+          <Option v-for="(item, index) of (secondClassifyOptionsMap[editClassfiy[0]] || [])" :key="index" :value="item">{{ item }}</Option>
+        </Select>
+      </template>
+      <template #class3="{ row }">
+        <Tag v-if="row.id !== editId">{{row.class3 || '暂无分类'}}</Tag>
+        <Select v-else v-model="editClassfiy[2]">
+          <Option v-for="(item, index) of (thirdClassifyOptionsMap[editClassfiy[1]] || [])" :key="index" :value="item">{{ item }}</Option>
+        </Select>
+      </template>
+      <template #line="{ row }">
+        <div v-if="row.line">
+          <Tag theme="success" v-for="(line, index) in row.line.split('-')" :key="index">{{ line }}</Tag>
+        </div>
+        <Tag v-else>暂无线路</Tag>
+      </template>
+      <template #address="{ row }">
+        <div v-if="row.address">
+          <Tag style="margin-right: 8px; margin-bottom: 8px;" theme="success" v-for="(add, index) in row.address.split('-')" :key="index">{{ add }}</Tag>
+        </div>
+        <Tag v-else>暂无线路</Tag>
+      </template>
+      <template #createdAt="{ row }">
+        <div>{{ dayjs(row.createdAt).format('YYYY-MM-DD hh:mm:ss') }}</div>
+      </template>
+      <template #operation="{ row }">
+        <div class="table-operations">
+          <t-link theme="primary" hover="color" :data-id="row.key" @click="onHandleEdit(row)">
+            {{ row.id === editId ? '保存' : '编辑' }}
+          </t-link>
+        </div>
+      </template>
+    </t-table>
   </div>
 </template>
 
-<script setup lang="tsx">
+<script setup lang="ts">
 import dayjs from 'dayjs';
-import { MessagePlugin, PageInfo, PrimaryTableCol,Select, Tag } from 'tdesign-vue-next';
-import { computed, onMounted, ref } from 'vue';
+import { MessagePlugin, PageInfo, Select, Tag, Option } from 'tdesign-vue-next';
+import { onMounted, ref } from 'vue';
 import { listDetect, updateAudio } from '@/api/audio';
 import { AudioInfo } from '@/api/model';
+import { firstClassifyOptions, secondClassifyOptionsMap, thirdClassifyOptionsMap } from './Casecader'
 
 const dataSource = ref<AudioInfo[]>([]);
 const page = ref(1);
@@ -59,14 +101,12 @@ const reloadAudioData = (pageInfo: PageInfo) => {
 
 onMounted(loadAudioDetact);
 
-const showChild = ref(false);
 const tableRef = ref();
-const align = ref('left');
-const editAudio = ref<AudioInfo | null>(null);
+const editClassfiy = ref<string[]>([]);
+const editId = ref('');
 
 const onSave = async (row: AudioInfo) => {
-  const { class1, class2, class3 } = row as any;
-  const tags = [class1, class2, class3].filter(Boolean);
+  const tags = editClassfiy.value.filter(Boolean);
   if (tags.some(item => /\-/g.test(item))) {
     MessagePlugin.warning('分类不能包含 "-" 符号')
     return;
@@ -74,6 +114,11 @@ const onSave = async (row: AudioInfo) => {
   const tag = tags.join('-');
   try {
     await updateAudio(row.id, { tag })
+    editId.value = '';
+    const [class1, class2, class3] = editClassfiy.value;
+    row.class1 = class1;
+    row.class2 = class2;
+    row.class3 = class3;
     MessagePlugin.success('更新数据成功')
   } catch (err) {
     MessagePlugin.error('更新数据失败，请重试')
@@ -81,73 +126,71 @@ const onSave = async (row: AudioInfo) => {
 };
 
 const onHandleEdit = (row: AudioInfo) => {
-  if ((row as any).isEdit) {
-    onSave(row);
-  } 
-  (row as any).isEdit = !(row as any).isEdit;
-}
-
-const confirmEditrAudioHandler = ({ id, editData }: { id: string; editData: any }) => {
-  const audio = dataSource.value.find((item) => item.id === id);
-  if (audio) {
-    Object.assign(audio, editData);
+  if (row.id === editId.value) {
+    // 保存
+    if (editClassfiy.value[0] && editClassfiy.value[1]) {
+      onSave(row);
+    } else {
+      MessagePlugin.warning('请选择第一级分类和第二级分类');
+      return;
+    }
+  } else {
+    editId.value = row.id;
+    editClassfiy.value = [row.class1, row.class2, row.class3];
   }
-};
-
-const columns = computed<PrimaryTableCol[]>(() => [
+}
+const columns: any = [
   {
     title: '语音文件名称',
     colKey: 'filename',
-    align: align.value,
+    align: 'left',
     width: 120,
     fixed: 'left'
   },
   {
     title: '识别文本',
-    colKey: 'letters',
-    cell: (_h, { row }) => row.result,
-    align: align.value,
+    colKey: 'result',
+    align: 'left',
     width: 400,
   },
   {
     title: '分类1',
-    colKey: 'status',
+    colKey: 'class1',
     width: 120,
-    cell: (_h, { row }) => row.isEdit ? <Select  v-model={row.class1} /> : <Tag>{row.class1 || '暂无分类'}</Tag>
-  }, {
+  },
+  {
     title: '分类2',
-    colKey: 'status',
+    colKey: 'class2',
     width: 120,
-    cell: (_h, { row }) => row.isEdit ? <Select v-model={row.class2} /> : <Tag>{row.class2 || '暂无分类'}</Tag>
-  }, {
+  }, 
+  {
     title: '分类3',
-    colKey: 'status',
+    colKey: 'class3',
     width: 120,
-    cell: (_h, { row }) => row.isEdit ? <Select v-model={row.class3} /> : <Tag>{row.class3 || '暂无分类'}</Tag>
+  },
+  {
+    title: '线路',
+    colKey: 'line',
+    align: 'left',
+  },
+  {
+    title: '站点',
+    colKey: 'address',
+    align: 'left',
   },
   {
     title: '创建日期',
     colKey: 'createdAt',
     className: 't-demo-col__datepicker',
     width: 200,
-    cell: (_h, { row }) => <div>{dayjs(row.createdAt).format('YYYY-MM-DD hh:mm:ss')}</div>,
   },
   {
     title: '操作栏',
-    colKey: 'operate',
+    colKey: 'operation',
     width: 150,
     fixed: 'right',
-    cell: (_h, { row }) => {
-      return (
-        <div class="table-operations">
-          <t-link v-if={!row.isEdit} theme="primary" hover="color" data-id={row.key} onClick={() => onHandleEdit(row)}>
-            { row.isEdit ? '保存' : '编辑' }
-          </t-link>
-        </div>
-      );
-    },
   },
-]);
+];
 </script>
 
 <style lang="less" scoped>
