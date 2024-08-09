@@ -40,11 +40,12 @@ const loading = ref(false);
 const baseData = ref([]);
 const pageSize = 8;
 const pagination = ref();
+const nowdataLength = ref(0);
 const loadAudioDetact = async () => {
   loading.value = true;
   try {
     const res = await listDetect(page.value, limit.value);
-    total.value = res.total
+    total.value = res.total;
     data.value = res.data.map(item => {
       const { tag } = item;
       const [class1, class2, class3] = tag?.split('-') || [];

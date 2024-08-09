@@ -25,7 +25,7 @@
     </div>
 
       <div class="dataShow">
-        <div class="dataShow_item">2024-7-1 来电投诉总量：{{ 12 }}</div>
+        <div class="dataShow_item">{{ now }} 来电投诉总量：{{ allTodayData}}</div>
         <div>
         </div>
         
@@ -41,8 +41,9 @@ import { columns } from './constant';
 import { thirdClassifyOptionsMap } from '@/pages/information/base/Casecader.ts'
 import dayjs from 'dayjs';
 import * as XLSX from 'xlsx';
-
+const now = dayjs().startOf('day').format('YYYY-MM-DD');
 const emit = defineEmits(['searchById'],['resetData'],['changeDate'],['changeType'],['changeTypeTiny'],['exportAllData']);
+
 const options1 = [
   { label: '全选', checkAll: true },
   { label: '综合类', value: '1' },
@@ -61,7 +62,11 @@ const options2 = Object.keys(thirdClassifyOptionsMap).map((item,index) =>{
 })
 const value1 = ref([]);
 const value2 = ref([]);
-
+const getTodayNumber = async() => {
+  const data = await getAllDetect();
+  allTodayData.value = data.filter(item => dayjs(item.createdAt).format('YYYY-MM-DD') === now).length;
+}
+getTodayNumber()
 const onFocus = (ctx) => {
   console.log('focus:', ctx);
 };
@@ -79,7 +84,7 @@ const searchByType = (values) => {
 const onBlur = (ctx) => {
   console.log('blur:', ctx);
 };
-
+const allTodayData = ref(0);
 const onPick = (value, context) => console.log('onPick:', value, context);
 const handleInput = (value) => {
   emit('searchById', value);
@@ -103,33 +108,6 @@ const onChange = (value, context) => {
 
 const handleExport = () => {
   emit('exportAllData');
-}
-
-const exportAllData = async () => {
-  const loading = MessagePlugin.loading('正在导出数据，请稍后...', 0);
-  const allData = await getAllDetect();
-  const csvData = allData.map((item, index) => {
-    const [class1, class2, class3] = item.tag?.split('-') || [];
-    return {
-      [columns[0].title]: index,
-      [columns[1].title]: item.filename,
-      [columns[2].title]: dayjs(item.createdAt).format("YYYY-MM-DD"),
-      [columns[3].title]: class1,
-      [columns[4].title]: class2,
-      [columns[5].title]: class3,
-    }
-  })
-
-  const workbook = XLSX.utils.book_new();
-  // 创建工作表
-  const worksheet = XLSX.utils.json_to_sheet(csvData);
-
-  // 将工作表添加到工作簿
-  XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-
-  // 保存为CSV文件
-  XLSX.writeFile(workbook, `数据报表.csv`);
-  MessagePlugin.close(loading)
 }
 </script>
 <style scoped>
