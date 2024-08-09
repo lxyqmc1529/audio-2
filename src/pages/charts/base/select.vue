@@ -2,8 +2,8 @@
   <div class="select">
     <div class="select_type">
       <t-space direction="vertical">
-       请选择分类1:<t-select v-model="value1" :options="options1" placeholder="请选择" multiple @focus="onFocus" @blur="onBlur" @change="searchByType" />
-      请选择分类2: <t-select v-model="value2" placeholder="请选择分类2" multiple @change="changeTypeTiny">
+       <t-select v-model="value1" :options="options1" placeholder="请选择" multiple @focus="onFocus" @blur="onBlur" @change="searchByType" />
+      <t-select v-model="value2" placeholder="请选择分类2" multiple @change="changeTypeTiny">
           <t-option label="全选" :check-all="true" />
           <t-option v-for="item in options2" :key="item.value" :value="item.value" :label="item.label"></t-option>
         </t-select>
@@ -38,7 +38,7 @@ import {  CloudDownloadIcon } from 'tdesign-icons-vue-next';
 import { MessagePlugin } from 'tdesign-vue-next';
 import { getAllDetect } from '@/api/audio';
 import { columns } from './constant';
-import { firstClassifyOptions, secondClassifyOptionsMap, thirdClassifyOptionsMap } from '@/pages/information/base/Casecader.ts'
+import { thirdClassifyOptionsMap } from '@/pages/information/base/Casecader.ts'
 import dayjs from 'dayjs';
 import * as XLSX from 'xlsx';
 
@@ -94,7 +94,8 @@ const changeTypeTiny = (values) => {
     emit('changeTypeTiny', labels);
 };
 const handleReset = () => {
-  emit('resetData');
+  // emit('resetData');
+  window.location.reload()
 }
 const onChange = (value, context) => {
   emit('changeDate', value, context);
@@ -103,7 +104,6 @@ const onChange = (value, context) => {
 const exportAllData = async () => {
   const loading = MessagePlugin.loading('正在导出数据，请稍后...', 0);
   const allData = await getAllDetect();
-  
   const csvData = allData.map((item, index) => {
     const [class1, class2, class3] = item.tag?.split('-') || [];
     return {

@@ -5,8 +5,8 @@
     <t-space>
       <div class="chart_table">
         <t-space direction="vertical">
-          <t-table row-key="index" :data="data" :columns="columns" :pagination="{
-            current: current,
+          <t-table row-key="serial-number" :data="data" :columns="columns" :pagination="{
+            current: page,
             pageSize: pageSize,
             total: total,
           }" table-layout="fixed" lazy-load @page-change="reloadAudioData" />
@@ -37,7 +37,6 @@ const totalData = ref(102);
 const total = ref(0);
 const loading = ref(false);
 const baseData = ref([]);
-const current = ref(1);
 const pageSize = 8;
 const pagination = ref();
 const loadAudioDetact = async () => {

@@ -44,7 +44,7 @@
         <div v-if="row.address">
           <Tag style="margin-right: 8px; margin-bottom: 8px;" theme="success" v-for="(add, index) in row.address.split('-')" :key="index">{{ add }}</Tag>
         </div>
-        <Tag v-else>暂无线路</Tag>
+        <Tag v-else>暂无站点</Tag>
       </template>
       <template #createdAt="{ row }">
         <div>{{ dayjs(row.createdAt).format('YYYY-MM-DD hh:mm:ss') }}</div>
