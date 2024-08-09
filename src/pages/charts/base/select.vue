@@ -38,6 +38,7 @@ import {  CloudDownloadIcon } from 'tdesign-icons-vue-next';
 import { MessagePlugin } from 'tdesign-vue-next';
 import { getAllDetect } from '@/api/audio';
 import { columns } from './constant';
+import { firstClassifyOptions, secondClassifyOptionsMap, thirdClassifyOptionsMap } from '@/pages/information/base/Casecader.ts'
 import dayjs from 'dayjs';
 import * as XLSX from 'xlsx';
 
@@ -47,17 +48,19 @@ const options1 = [
   { label: '综合类', value: '1' },
   { label: '规范服务', value: '2' },
   { label: '呕吐物', value: '3' },
-  { label: '投诉全选', value: '4' }
+  { label: '优质服务', value: '4' },
+  { label: '站车环境', value: '5' },
+  { label: '列车运行', value: '6' },
+  { label: '设施设备', value: '7' },
 ];
-const options2 = [
-  { label: '站车环境', value: '1' },
-  { label: '重复投诉', value: '2' },
-  { label: '客运组织', value: '3' },
-  { label: '规范服务', value: '4' },
-];
-
-const value1 = ref(['1', '2']);
-const value2 = ref(['1', '2', '3', '4']);
+const options2 = Object.keys(thirdClassifyOptionsMap).map((item,index) =>{
+  return {
+    label: item,
+    value: index.toString()
+  }
+})
+const value1 = ref([]);
+const value2 = ref([]);
 
 const onFocus = (ctx) => {
   console.log('focus:', ctx);
