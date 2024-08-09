@@ -112,18 +112,18 @@ function renderChart() {
       data: yAxisData.value,
       type: 'line',
       smooth: true,
-      name: findTopThreeClassesWithTimeCounts(props.dataSource)[0].classify_3,
+      name: findTopThreeClassesWithTimeCounts(props.dataSource)[0]?.classify_3,
     },
     {
       data: yAxisData2.value,
       type: 'line',
       smooth: true,
-      name: findTopThreeClassesWithTimeCounts(props.dataSource)[1].classify_3,
+      name: findTopThreeClassesWithTimeCounts(props.dataSource)[1]?.classify_3,
     },{
       data: yAxisData3.value,
       type: 'line',
       smooth: true,
-      name: findTopThreeClassesWithTimeCounts(props.dataSource)[2].classify_3,
+      name: findTopThreeClassesWithTimeCounts(props.dataSource)[2]?.classify_3,
     },
   ]
 };

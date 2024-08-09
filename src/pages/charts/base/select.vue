@@ -2,7 +2,7 @@
   <div class="select">
     <div class="select_type">
       <t-space direction="vertical">
-       <t-select v-model="value1" :options="options1" placeholder="请选择" multiple @focus="onFocus" @blur="onBlur" @change="searchByType" />
+       <t-select v-model="value1" :options="options1" placeholder="请选择分类1" multiple @focus="onFocus" @blur="onBlur" @change="searchByType" />
       <t-select v-model="value2" placeholder="请选择分类2" multiple @change="changeTypeTiny">
           <t-option label="全选" :check-all="true" />
           <t-option v-for="item in options2" :key="item.value" :value="item.value" :label="item.label"></t-option>
@@ -19,7 +19,7 @@
         <t-input @change="handleInput" placeholder="请输入查询ID" />
         <div style="margin-top: 10px">
           <t-button type="primary" @click="handleReset">重置查询条件</t-button>
-          <t-button @click="exportAllData">  <template #icon> <cloud-download-icon /></template>导出数据</t-button>
+          <t-button @click="handleExport">  <template #icon> <cloud-download-icon /></template>导出数据</t-button>
         </div>
       </div>
     </div>
@@ -42,7 +42,7 @@ import { thirdClassifyOptionsMap } from '@/pages/information/base/Casecader.ts'
 import dayjs from 'dayjs';
 import * as XLSX from 'xlsx';
 
-const emit = defineEmits(['searchById'],['resetData'],['changeDate'],['changeType'],['changeTypeTiny']);
+const emit = defineEmits(['searchById'],['resetData'],['changeDate'],['changeType'],['changeTypeTiny'],['exportAllData']);
 const options1 = [
   { label: '全选', checkAll: true },
   { label: '综合类', value: '1' },
@@ -100,6 +100,10 @@ const handleReset = () => {
 const onChange = (value, context) => {
   emit('changeDate', value, context);
 };
+
+const handleExport = () => {
+  emit('exportAllData');
+}
 
 const exportAllData = async () => {
   const loading = MessagePlugin.loading('正在导出数据，请稍后...', 0);
