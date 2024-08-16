@@ -2,7 +2,7 @@
   <div class="select">
     <div class="select_type">
       <t-space direction="vertical">
-       <t-select v-model="value1" :options="options1" placeholder="请选择分类1" multiple @focus="onFocus" @blur="onBlur" @change="searchByType" />
+       <t-select style="width: 300px;" v-model="value1" :options="options1" placeholder="请选择分类1" multiple @focus="onFocus" @blur="onBlur" @change="searchByType" />
       <t-select v-model="value2" placeholder="请选择分类2" multiple @change="changeTypeTiny">
           <t-option label="全选" :check-all="true" />
           <t-option v-for="item in options2" :key="item.value" :value="item.value" :label="item.label"></t-option>
@@ -25,7 +25,8 @@
     </div>
 
       <div class="dataShow">
-        <div class="dataShow_item">{{ now }} 来电投诉总量：{{ allTodayData}}</div>
+        <!-- <div class="dataShow_item">{{ now }} 来电投诉总量：{{ allTodayData}}</div> -->
+        <div class="dataShow_item">2024-08-13 来电投诉总量：10 </div>
         <div>
         </div>
         
@@ -122,7 +123,7 @@ const handleExport = () => {
 
 .select_type {
   flex: 0.6;
-  width: 20%;
+  width: 50%;
 }
 
 .select_right {

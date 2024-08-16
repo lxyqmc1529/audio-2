@@ -4,12 +4,12 @@
   <div class="content">
     <t-space>
       <div class="chart_table">
-        <t-space direction="vertical">
+        <t-space direction="vertical" style="height: 600px;">
           <t-table row-key="serial-number" :data="data" :columns="columns" :pagination="{
             current: page,
             pageSize: pageSize,
             total: total,
-          }" table-layout="fixed" lazy-load @page-change="reloadAudioData" />
+          }" table-layout="fixed" lazy-load @page-change="reloadAudioData" :height="610" :row-class-name="getRowClassName" />
         </t-space>
       </div>
       <div class="pie">
@@ -33,12 +33,12 @@ import * as XLSX from 'xlsx';
 
 const data = ref([]);
 const page = ref(1);
-const limit = ref(8);
+const limit = ref(10);
 const totalData = ref(102);
 const total = ref(0);
 const loading = ref(false);
 const baseData = ref([]);
-const pageSize = 8;
+const pageSize = 10;
 const pagination = ref();
 const nowdataLength = ref(0);
 const loadAudioDetact = async () => {
@@ -59,7 +59,7 @@ const loadAudioDetact = async () => {
     data.value = data.value.map((item, index) => {
       return {
         index: index,
-        applicant: item.filename,
+        applicant: item.filename.replace('.mp3', ''),
         createTime: dayjs(item.createdAt).format("YYYY-MM-DD"),
         classify_1: item.class1,
         classify_2: item.class2,
@@ -121,12 +121,16 @@ const handleExportData = async () => {
   XLSX.writeFile(workbook, `数据报表.csv`);
   MessagePlugin.close(loading)
 }
+const getRowClassName = () => {
+  return 'rowClass';
+}
 const reserveSelectedRowOnPaginate = ref(true);
 </script>
 
 <style>
 .content {
   width: 100%;
+  height: 100vh;
   display: flex;
 }
 
@@ -141,8 +145,11 @@ const reserveSelectedRowOnPaginate = ref(true);
 .pie {
   width: 100%;
   flex: 0.7;
-  width: 400px;
+  width: 450px;
   background-color: white;
   padding: 12px;
+}
+.rowClass{
+  height: 60px;
 }
 </style>

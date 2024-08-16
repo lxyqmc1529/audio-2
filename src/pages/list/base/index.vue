@@ -127,13 +127,16 @@ const startDetect = async () => {
   }
   console.log('开始执行sse连接检测');
   const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+  //EventSourcePolyfill是一个模拟SSE的库，连接到服务器的 /v1/audio/sse 端点，并设置请求头和心跳超时时间
   const source = new EventSourcePolyfill('http://localhost:8080/v1/audio/sse', {
     headers: {
       'x-token': accessToken,
     },
     heartbeatTimeout: 10 * 60 * 1000, // 10分钟心跳超时时间
   });
+  // 添加一个事件监听器，用于监听并执行回调函数
   source.addEventListener('message', (e: any) => {
+    //尝试解析从服务器接收到的数据
     const data = parseJSONWithCatch(e.data);
     if (!data) {
       return;

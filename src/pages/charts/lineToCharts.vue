@@ -1,5 +1,5 @@
 <template>
-  <div class="chart-container"  ref="main" style="width:100%; height: 280px"></div>
+  <div class="chart-container"  ref="main" style="width:100%; height: 350px"></div>
 </template>
 <script lang="ts" setup>
 import * as echarts from 'echarts'; //  按需引入 echarts
@@ -72,8 +72,10 @@ function renderChart() {
       top: 30,
     },
     grid:{
-      top: 70,
-      bottom:20
+      top: 60,
+      bottom:50,
+      right: 50,
+      left: 50
     },
     tooltip: {
       trigger: 'axis',
@@ -83,17 +85,33 @@ function renderChart() {
     },
   xAxis: {
     type: 'category',
+    name: '时间/h',
     boundarygap: false,
     showAllTickLabels: true,
+    nameLocation: 'center',
     data: xAxisData,
     interval: 4,
+    axisTick: {
+    show: true,
+    inside: true, // 设置为 true 使刻度朝内
+  },
+  axisLine: {
+    show: true,
+  },
+  axisLabel: {
+    show: true,
+    margin: 0,
+  },
   },
   yAxis: {
     type: 'value',
+    name: '来电数量/个',
     show:true,
     minInterval: 1,
+    nameLocation: 'center',
     axisLabel: {
             show: true,
+            margin: 2,
             color: '#333' // 设置 y 轴刻度标签颜色
         },
         axisLine: {
@@ -104,6 +122,7 @@ function renderChart() {
         },
         axisTick: {
             show: true,
+            inside: true, // 设置为 true 使刻度朝内
             length: 10 // 设置 y 轴刻度线长度
         }
   },
