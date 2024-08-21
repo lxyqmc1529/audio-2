@@ -30,6 +30,7 @@ import Select from './select.vue';
 import pieChart from '../pieCharts.vue';
 import { columns } from './constant';
 import * as XLSX from 'xlsx';
+import { debounce} from 'lodash';
 
 const data = ref([]);
 const page = ref(1);
@@ -57,9 +58,12 @@ const loadAudioDetact = async () => {
       }
     })
     data.value = data.value.map((item, index) => {
+      const { filename } = item;
+      let name = item.filename.replace('.mp3','');
+      let newname = name.slice(0,name.length-3);
       return {
         index: index,
-        applicant: item.filename.replace('.mp3', ''),
+        applicant: newname + '***',
         createTime: dayjs(item.createdAt).format("YYYY-MM-DD"),
         classify_1: item.class1,
         classify_2: item.class2,
@@ -77,11 +81,11 @@ const reloadAudioData = (pageInfo) => {
   loadAudioDetact();
 };
 onMounted(loadAudioDetact);
-const handleSearchById = (id) => {
+const handleSearchById = debounce((id) => {
   data.value = data.value.filter((item) =>
     item.applicant.includes(id)
   );
-}
+},300)
 const handleChangeDate = (date, context) => {
   data.value = data.value.filter((item) => item.createTime >= date[0] && item.createTime <= date[1]);
 }
