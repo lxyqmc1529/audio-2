@@ -9,7 +9,7 @@
             current: page,
             pageSize: pageSize,
             total: total,
-          }" table-layout="fixed" lazy-load @page-change="reloadAudioData" :height="610" :row-class-name="getRowClassName" />
+          }" table-layout="fixed" lazy-load @page-change="reloadAudioData" :height="610" :reserve-selection="reserveSelectedRowOnPaginate" :row-class-name="getRowClassName" />
         </t-space>
       </div>
       <div class="pie">
@@ -68,6 +68,9 @@ const loadAudioDetact = async () => {
         classify_1: item.class1,
         classify_2: item.class2,
         classify_3: item.class3,
+        line:item.line,
+        address:item.address,
+
       }
     })
     baseData.value = data.value;
@@ -112,6 +115,8 @@ const handleExportData = async () => {
       [columns[3].title]: item.classify_2,
       [columns[4].title]: item.classify_3,
       [columns[5].title]: dayjs(item.createTime).format("YYYY-MM-DD"),
+      [columns[6].title]: item.line,
+      [columns[7].title]: item.address,
     }
   })
 
