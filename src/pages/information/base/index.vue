@@ -46,6 +46,12 @@
         </div>
         <Tag v-else>暂无站点</Tag>
       </template>
+      <template #sensitive="{ row }">
+        <div v-if="row.sensitive">
+          <Tag style="margin-right: 8px; margin-bottom: 8px;" theme="danger" v-for="(item, index) in row.sensitive.split('-')" :key="index">{{ item }}</Tag>
+        </div>
+        <Tag v-else>无敏感信息</Tag>
+      </template>
       <template #createdAt="{ row }">
         <div>{{ dayjs(row.createdAt).format('YYYY-MM-DD hh:mm:ss') }}</div>
       </template>
@@ -176,6 +182,11 @@ const columns: any = [
   {
     title: '站点',
     colKey: 'address',
+    align: 'left',
+  },
+  {
+    title: '敏感词',
+    colKey: 'sensitive',
     align: 'left',
   },
   {

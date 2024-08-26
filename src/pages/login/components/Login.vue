@@ -32,12 +32,12 @@
       </t-input>
     </t-form-item>
 
-    <t-form-item name="captcha" class="captcha-code-form">
+    <!-- <t-form-item name="captcha" class="captcha-code-form">
       <t-input v-model="formData.captcha" size="large" placeholder="请输入验证码"></t-input>
       <div class="captcha-url" @click="loadCaptchaUrl">
         <img :src="captchaUrl" alt="" />
       </div>
-    </t-form-item>
+    </t-form-item> -->
 
     <div class="check-container remember-pwd" >
       <t-checkbox>{{ '记住密码' }}</t-checkbox>
@@ -55,7 +55,7 @@ import { MessagePlugin } from 'tdesign-vue-next';
 import { onBeforeMount, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-import { getCaptcha } from '@/api/user';
+// import { getCaptcha } from '@/api/user';
 import { useUserStore } from '@/store';
 
 const userStore = useUserStore();
@@ -63,20 +63,20 @@ const userStore = useUserStore();
 const INITIAL_DATA = {
   username: '',
   password: '',
-  captcha: '',
+  // captcha: '',
   checked: false,
 };
 
 const FORM_RULES: Record<string, FormRule[]> = {
   username: [{ required: true, message: '账户登录需要输入账号', type: 'error' }],
   password: [{ required: true, message: '账户登录需要输入密码', type: 'error' }],
-  captcha: [{ required: true, message: '请输入验证码', type: 'error' }],
+  // captcha: [{ required: true, message: '请输入验证码', type: 'error' }],
 };
 
 const form = ref<FormInstanceFunctions>();
 const formData = ref({ ...INITIAL_DATA });
 const showPsw = ref(false);
-const captchaUrl = ref('');
+// const captchaUrl = ref('');
 
 const router = useRouter();
 const route = useRoute();
@@ -87,7 +87,7 @@ const onSubmit = async (ctx: SubmitContext) => {
       await userStore.login({
         username: formData.value.username,
         password: formData.value.password,
-        captcha: formData.value.captcha,
+        // captcha: formData.value.captcha,
       });
 
       MessagePlugin.success('登录成功');
@@ -99,15 +99,15 @@ const onSubmit = async (ctx: SubmitContext) => {
     }
   }
 };
-const loadCaptchaUrl = async () => {
-  try {
-    const res = await getCaptcha();
-    captchaUrl.value = res.imgUrl;
-  } catch (err) {
-    MessagePlugin.error(err.message);
-  }
-};
-onBeforeMount(loadCaptchaUrl);
+// const loadCaptchaUrl = async () => {
+//   try {
+//     const res = await getCaptcha();
+//     captchaUrl.value = res.imgUrl;
+//   } catch (err) {
+//     MessagePlugin.error(err.message);
+//   }
+// };
+// onBeforeMount(loadCaptchaUrl);
 </script>
 
 <style lang="less" scoped>

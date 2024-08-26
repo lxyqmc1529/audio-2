@@ -43,6 +43,12 @@
             </div>
             <Tag v-else>暂无线路</Tag>
           </template>
+          <template #sensitive="{ row }">
+            <div v-if="row.sensitive">
+              <Tag style="margin-right: 8px; margin-bottom: 8px;" theme="danger" v-for="(item, index) in row.sensitive.split('-')" :key="index">{{ item }}</Tag>
+            </div>
+            <Tag v-else>无敏感词</Tag>
+          </template>
         </t-table>
       </div>
     </template>
@@ -96,6 +102,11 @@ const columns: PrimaryTableCol[] = [
   {
     title: '站点',
     colKey: 'address',
+    align: 'left',
+  },
+  {
+    title: '敏感词',
+    colKey: 'sensitive',
     align: 'left',
   }
 ];

@@ -6,7 +6,7 @@ export interface RegisterUserInfo {
 export interface LoginInfo {
   username: string;
   password: string;
-  captcha: string;
+  // captcha: string;
 }
 
 export const enum UserRole {
